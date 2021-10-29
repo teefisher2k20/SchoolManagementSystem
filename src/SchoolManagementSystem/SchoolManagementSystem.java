@@ -34,13 +34,13 @@ public class SchoolManagementSystem extends javax.swing.JFrame {
      */
     private static final String username = "root";
     private static final String password = "Learn2code!";
-    private static final String dataCon = "jdbc:mysql://localhost::3306/schools ";
+    private static final String dataCon = "jdbc:mysql://localhost:3306/schools ";
     
     Connection sqlCon = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
     
-    int q, i, id, deleteItem;
+    int q, i;
     
     public SchoolManagementSystem() {
         initComponents();
@@ -57,6 +57,7 @@ public class SchoolManagementSystem extends javax.swing.JFrame {
         {
            Class.forName("com.mysql.jdbc.Driver");
            sqlCon = DriverManager.getConnection(username, password, dataCon);
+           pst = sqlCon.prepareStatement("select * from schools");
            
            rs = pst.executeQuery();
            ResultSetMetaData stData = rs.getMetaData();
@@ -71,7 +72,7 @@ public class SchoolManagementSystem extends javax.swing.JFrame {
                
                for (i = 1; i <= q; i++)
                {
-                   columnData.add(rs.getString("id"));
+                   columnData.add(rs.getString("ID"));
                    columnData.add(rs.getString("StudentID"));
                    columnData.add(rs.getString("Firstname"));
                    columnData.add(rs.getString("Lastname"));
@@ -214,6 +215,11 @@ public class SchoolManagementSystem extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -876,6 +882,11 @@ public class SchoolManagementSystem extends javax.swing.JFrame {
 
         jbtnAddNew.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         jbtnAddNew.setText("Add New");
+        jbtnAddNew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnAddNewActionPerformed(evt);
+            }
+        });
 
         jbtnExit.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         jbtnExit.setText("Exit");
@@ -1220,7 +1231,86 @@ public class SchoolManagementSystem extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jcboCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcboCourseActionPerformed
-        // TODO add your handling code here:
+        if (jcboCourse.getSelectedItem().equals("BA Animation"))
+        {
+            jtxtCourseCode.setText("BA0004");
+            jtxtFaculityName.setText("School of Art");
+            jtxtDean.setText("Prof. Terrance Fisher");
+            jtxtLeader.setText("Tee Fisher");
+            jtxtTutor.setText("Dr. Terrance Fisher");
+            
+        }
+        
+        else if (jcboCourse.getSelectedItem().equals("PhD Computer Science"))
+        {
+            jtxtCourseCode.setText("PhDCS001");
+            jtxtFaculityName.setText("School of Computer Science");
+            jtxtDean.setText("Dr. Fisher");
+            jtxtLeader.setText("Dr Terrance");
+            jtxtTutor.setText("Tee Fisher");
+            
+        }
+        
+        else if (jcboCourse.getSelectedItem().equals("BSc Serious Games"))
+        {
+            jtxtCourseCode.setText("BScSG0009");
+            jtxtFaculityName.setText("School of Serious Games");
+            jtxtDean.setText("Terrance");
+            jtxtLeader.setText("Prof. Terrance");
+            jtxtTutor.setText("Dr. Fisher");
+            
+        }
+        
+        else if (jcboCourse.getSelectedItem().equals("BSc Computer"))
+        {
+            jtxtCourseCode.setText("BScMC001");
+            jtxtFaculityName.setText("School of Computers");
+            jtxtDean.setText("Dr. Fisher");
+            jtxtLeader.setText("Dr Terrance");
+            jtxtTutor.setText("Tee Fisher");
+            
+        }
+        
+        else if (jcboCourse.getSelectedItem().equals("BSc Computer Science"))
+        {
+            jtxtCourseCode.setText("BScCS001");
+            jtxtFaculityName.setText("School of Computer Science");
+            jtxtDean.setText("Dr. Fisher");
+            jtxtLeader.setText("Dr Terrance");
+            jtxtTutor.setText("Tee Fisher");
+            
+        }
+        
+        else if (jcboCourse.getSelectedItem().equals("BSc Computer Animation"))
+        {
+            jtxtCourseCode.setText("BScCA001");
+            jtxtFaculityName.setText("School of Computer Animation");
+            jtxtDean.setText("Dr. Fisher");
+            jtxtLeader.setText("Dr Terrance");
+            jtxtTutor.setText("Tee Fisher");
+            
+        }
+        
+        else if (jcboCourse.getSelectedItem().equals("BSc Information Systems"))
+        {
+            jtxtCourseCode.setText("BScIS001");
+            jtxtFaculityName.setText("School of Information Systems");
+            jtxtDean.setText("Dr. Fisher");
+            jtxtLeader.setText("Dr Terrance");
+            jtxtTutor.setText("Tee Fisher");
+            
+        }
+        
+        else if (jcboCourse.getSelectedItem().equals("PhD Serious Games"))
+        {
+            jtxtCourseCode.setText("PhDSG001");
+            jtxtFaculityName.setText("School of Serious Games");
+            jtxtDean.setText("Dr. Fisher");
+            jtxtLeader.setText("Dr Terrance");
+            jtxtTutor.setText("Tee Fisher");
+            
+        }
+        
     }//GEN-LAST:event_jcboCourseActionPerformed
 
     private void JCboDataScienceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCboDataScienceActionPerformed
@@ -1438,6 +1528,47 @@ public class SchoolManagementSystem extends javax.swing.JFrame {
         jcboCourse.setSelectedIndex(0);
         jcboGuidence.setSelectedIndex(0);
     }//GEN-LAST:event_jbtnResetActionPerformed
+
+    private void jbtnAddNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAddNewActionPerformed
+       try
+        {
+           Class.forName("com.mysql.jdbc.Driver");
+           sqlCon = DriverManager.getConnection(username, password, dataCon);
+           pst = sqlCon.prepareStatement("insert into schools (StudentID, Firstname, Lastname, Address, Gender, DOB, Phone, Email,"
+                   + "Guidance, Firstname, Lastname, Address, Phone, Email, CourseCode, value(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+           pst.setString(1, jtxtStudentID.getText());
+           pst.setString(2, jtxtFirstname.getText());
+           pst.setString(3, jtxtLastname.getText());
+           pst.setString(4, jtxtAddress.getText());
+           pst.setString(5, (String)jcboGender.getSelectedItem());
+           pst.setString(6, jtxtDOB.getText());
+           pst.setString(7, jtxtPhone.getText());
+           pst.setString(8, jtxtEmail.getText());
+           pst.setString(9, (String)jcboGuidence.getSelectedItem());
+           pst.setString(10, jtxtgFirstname.getText());
+           pst.setString(11, jtxtgLastname.getText());
+           pst.setString(12, jtxtgAddress.getText());
+           pst.setString(13, jtxtgPhone.getText());
+           pst.setString(14, jtxtgEmail.getText());
+           pst.setString(15, jtxtCourseCode.getText());
+           
+           pst.executeUpdate();
+           JOptionPane.showMessageDialog(this, "School Record Updated");
+           uploadDB();
+        }
+       catch(ClassNotFoundException ex)
+       {
+           java.util.logging.Logger.getLogger(SchoolManagementSystem.class.getName()).log(java.util.logging.Level.SEVERE,null, ex);
+       }
+       catch(SQLException ex)
+       {
+           java.util.logging.Logger.getLogger(SchoolManagementSystem.class.getName()).log(java.util.logging.Level.SEVERE,null, ex);
+       }
+    }//GEN-LAST:event_jbtnAddNewActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+       uploadDB();
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
